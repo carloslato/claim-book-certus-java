@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Reclamos</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.24.2/dist/css/uikit.min.css" />
+</head>
+<body>
+
+<div class="uk-container uk-margin-large-top">
+    <h2>Listado de Reclamos</h2>
+
+    <table class="uk-table uk-table-divider">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripcion</th>
+				<th>Tipo de reclamo</th>
+                <th>Fecha</th>
+				<th>Accion</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="r : ${reclamos}">
+                <td th:text="${r.id}"></td>
+                <td th:text="${r.nombre}"></td>
+                <td th:text="${r.descripcion}"></td>
+				<td th:text="${r.tipo.descripcion}"></td>
+                <td th:text="${#temporals.format(r.fechaCreacion, 'dd/MM/yyyy HH:mm')}"></td>
+				<td>
+					<a th:href="@{'/reclamos/' + ${r.id}}">Ver reclamo</a>
+				</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="uk-button uk-button-primary" href="/reclamos/nuevo">Nuevo reclamo</a>
+</div>
+
+</body>
+</html>

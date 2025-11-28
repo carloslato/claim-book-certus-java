@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nuevo Reclamo</title>
+
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.24.2/dist/css/uikit.min.css" />
+</head>
+<body>
+
+<div class="uk-container uk-margin-large-top">
+    <h2>Libro de Reclamaciones</h2>
+
+	<form class="uk-form-stacked"
+	      th:action="@{/reclamos/guardar}"
+	      th:object="${reclamo}"
+	      method="post">
+
+        <div class="uk-margin">
+            <label class="uk-form-label">Nombre</label>
+            <input class="uk-input" type="text" th:field="*{nombre}" required>
+        </div>
+
+        <div class="uk-margin">
+            <label class="uk-form-label">Correo</label>
+            <input class="uk-input" type="email" th:field="*{correo}">
+        </div>
+
+        <div class="uk-margin">
+            <label class="uk-form-label">Teléfono</label>
+            <input class="uk-input" type="text" th:field="*{telefono}">
+        </div>
+
+		<div class="uk-margin">
+		    <label class="uk-form-label">Tipo de reclamo</label>
+		    <select class="uk-select" th:field="*{tipo}">
+		        <option th:each="t : ${tipos}" th:value="${t.id}" th:text="${t.descripcion}"></option>
+		    </select>
+		</div>
+
+        <div class="uk-margin">
+            <label class="uk-form-label">Descripción</label>
+            <textarea class="uk-textarea" th:field="*{descripcion}" required></textarea>
+        </div>
+
+        <button class="uk-button uk-button-primary">Enviar</button>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.24.2/dist/js/uikit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.24.2/dist/js/uikit-icons.min.js"></script>
+
+</body>
+</html>

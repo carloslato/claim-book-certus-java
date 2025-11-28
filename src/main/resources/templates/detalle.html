@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle Reclamo</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.24.2/dist/css/uikit.min.css" />
+</head>
+<body>
+
+<div class="uk-container uk-margin-large-top">
+    <h2>Detalle del Reclamo</h2>
+
+    <ul class="uk-list uk-list-divider">
+        <li><b>ID:</b> <span th:text="${reclamo.id}"></span></li>
+        <li><b>Nombre:</b> <span th:text="${reclamo.nombre}"></span></li>
+        <li><b>Descripción:</b> <span th:text="${reclamo.descripcion}"></span></li>
+        <li><b>Tipo:</b> <span th:text="${reclamo.tipo.descripcion}"></span></li>
+        <li><b>Fecha:</b> <span th:text="${#temporals.format(reclamo.fechaCreacion,'dd/MM/yyyy HH:mm')}"></span></li>
+    </ul>
+
+    <a class="uk-button uk-button-default" href="/reclamos/lista">Volver</a>
+</div>
+
+</body>
+</html>
