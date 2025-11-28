@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,12 +26,6 @@ public class ApiController {
 	@Autowired
     private ReclamoRepository reclamoRepo;
 
-    @Autowired
-    private TipoReclamoRepository tipoRepo;
-    
-    @Autowired
-    private EstadoRepository estadoRepo;
-
     @PostMapping
     public Reclamo crear(@RequestBody Reclamo reclamo) {
         return reclamoRepo.save(reclamo);
@@ -48,7 +43,7 @@ public class ApiController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    /*
+    
     @PutMapping("/{id}")
     public ResponseEntity<Reclamo> editar(@PathVariable Long id, @RequestBody Reclamo data) {
         return reclamoRepo.findById(id).map(r -> {
@@ -58,8 +53,8 @@ public class ApiController {
             r.setTipo(data.getTipo());
             r.setDescripcion(data.getDescripcion());
             r.setEstado(data.getEstado());
-            return ResponseEntity.ok(reclamoRepository.save(r));
+            return ResponseEntity.ok(reclamoRepo.save(r));
         }).orElse(ResponseEntity.notFound().build());
     }
-    */
+    
 }
