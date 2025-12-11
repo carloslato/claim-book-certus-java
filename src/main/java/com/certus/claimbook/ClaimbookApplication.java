@@ -2,13 +2,9 @@ package com.certus.claimbook;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import com.vaadin.flow.theme.Theme;
-import com.vaadin.flow.component.page.AppShellConfigurator;
 
-@SuppressWarnings("serial")
 @SpringBootApplication
-@Theme("my-theme")
-public class ClaimbookApplication implements AppShellConfigurator {
+public class ClaimbookApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ClaimbookApplication.class, args);
