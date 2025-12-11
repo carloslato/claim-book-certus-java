@@ -3,7 +3,8 @@
 
 <div layout:fragment="content">
   
-	<h3 th:text="'Reclamo: ' + ${reclamo.codigoSeguimiento}"></h3>
+	<h3 th:text="'ID Reclamo: ' + ${reclamo.id}"></h3>
+	<h4 th:text="'Código seguimiento: ' + ${reclamo.codigoSeguimiento}"></h4>
 	
 	<p><b>Nombre:</b> <span th:text="${reclamo.nombre}"></span></p>
 	<p><b>Descripción:</b> <span th:text="${reclamo.descripcion}"></span></p>
