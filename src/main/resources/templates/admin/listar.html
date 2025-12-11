@@ -1,0 +1,39 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout-gestion.html}">
+
+
+<div layout:fragment="content">
+    
+	<h3>Listado de Reclamos</h3>
+	
+	<table class="uk-table uk-table-divider">
+	    <thead>
+	        <tr>
+				<th>ID</th>
+				<th>Nombre</th>
+				<th>Tipo</th>
+				<th>Estado</th>
+				<th>Codigo seguimiento</th>
+				
+				<th></th></tr>
+	    </thead>
+	    <tbody>
+	        <tr th:each="r : ${reclamos}">
+	            <td th:text="${r.id}"></td>
+	            <td th:text="${r.nombre}"></td>
+	            <td th:text="${r.tipo.descripcion}"></td>
+				<td th:text="${r.estado.descripcion}"></td>
+				<td th:text="${r.codigoSeguimiento}"></td>
+	            <td>
+	                <a class="uk-button uk-button-small uk-button-primary"
+	                   th:href="@{'/reclamos/admin/detalle/' + ${r.id}}">
+	                   Ver
+	                </a>
+	            </td>
+	        </tr>
+	    </tbody>
+	</table>
+
+</div>
+
+</html>

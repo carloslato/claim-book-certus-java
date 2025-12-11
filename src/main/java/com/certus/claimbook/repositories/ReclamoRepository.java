@@ -8,4 +8,5 @@ public interface ReclamoRepository extends JpaRepository<Reclamo, Long> {
 	Optional<Reclamo> findByCodigoSeguimiento(String codigo);
 
     long countByCodigoSeguimientoStartingWith(String prefix);
+    long countByEstadoDescripcion(String descripcion);
 }

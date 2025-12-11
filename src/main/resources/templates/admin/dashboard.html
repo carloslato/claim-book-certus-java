@@ -1,0 +1,33 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout-gestion.html}">
+
+<div layout:fragment="content">
+  
+	<h3>Dashboard</h3>
+
+	<div class="uk-grid uk-child-width-1-4@m" uk-grid>
+	
+	    <div class="uk-card uk-card-default uk-card-body">
+	        <h4>Total Reclamos</h4>
+	        <p th:text="${total}"></p>
+	    </div>
+	
+	    <div class="uk-card uk-card-default uk-card-body">
+	        <h4>Pendientes</h4>
+	        <p th:text="${abiertos}"></p>
+	    </div>
+		<div class="uk-card uk-card-default uk-card-body">
+	        <h4>En proceso</h4>
+	        <p th:text="${proceso}"></p>
+	    </div>
+	
+	    <div class="uk-card uk-card-default uk-card-body">
+	        <h4>Cerrados</h4>
+	        <p th:text="${cerrados}"></p>
+	    </div>
+	
+	</div>
+
+</div>
+
+</html>

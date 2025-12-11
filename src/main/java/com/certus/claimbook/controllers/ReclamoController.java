@@ -16,7 +16,7 @@ import com.certus.claimbook.repositories.ReclamoRepository;
 import com.certus.claimbook.repositories.TipoReclamoRepository;
 
 @Controller
-@RequestMapping("/reclamos")
+@RequestMapping("/legacy")
 public class ReclamoController {
 
     @Autowired
