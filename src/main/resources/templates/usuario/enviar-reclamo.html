@@ -1,55 +1,101 @@
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{layout.html}">
-	
-<div layout:fragment="content">
+<div xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+     layout:decorate="~{layout.html}">
+  <div layout:fragment="content">
 
-	<div class="uk-card uk-card-default uk-card-body">
-	
-	    <h3>Enviar Reclamo</h3>
-	
-	    <form id="form-reclamo">
-	
-	        <div class="uk-margin">
-	            <input class="uk-input" name="nombre" placeholder="Nombre" required>
-	        </div>
-	
-	        <div class="uk-margin">
-	            <input class="uk-input" name="correo" placeholder="Correo">
-	        </div>
-	
-	        <div class="uk-margin">
-	            <textarea class="uk-textarea" name="descripcion" placeholder="Descripción" required></textarea>
-	        </div>
-	
-	        <button class="uk-button uk-button-primary">Enviar</button>
-	
-	    </form>
-	</div>
+    <div class="uk-card uk-card-default uk-card-body">
+      <h3>Enviar Reclamo</h3>
 
-</div>
+      <form id="form-reclamo">
 
+        <div class="uk-margin">
+          <label class="uk-form-label">Nombre</label>
+          <input class="uk-input" name="nombre" placeholder="Nombre" required>
+        </div>
 
-<script layout:fragment="script">
-	
-document.querySelector("#form-reclamo").addEventListener("submit", async (e)=>{
-    e.preventDefault();
+        <div class="uk-margin">
+          <label class="uk-form-label">Correo</label>
+          <input class="uk-input" type="email" name="correo" placeholder="Correo">
+        </div>
 
-    const data = Object.fromEntries(new FormData(e.target));
+        <div class="uk-margin">
+          <label class="uk-form-label">Teléfono</label>
+          <input class="uk-input" name="telefono" placeholder="Teléfono">
+        </div>
 
-    const resp = await fetch("/api/reclamos", {
-        method:"POST",
-        headers:{ "Content-Type":"application/json" },
-        body: JSON.stringify(data)
+        <div class="uk-margin">
+          <label class="uk-form-label">Tipo de reclamo</label>
+          <select class="uk-select" id="tipo-select" name="tipoSelect" required>
+            <option value="">-- Seleccione --</option>
+            <option th:each="t : ${tipos}"
+                    th:value="${t.id}"
+                    th:text="${t.descripcion}"></option>
+          </select>
+        </div>
+
+        <!-- si quieres que el estado sea siempre 1 al crear, lo dejamos hidden -->
+        <input type="hidden" id="estado-default" value="1">
+
+        <div class="uk-margin">
+          <label class="uk-form-label">Descripción</label>
+          <textarea class="uk-textarea" name="descripcion" placeholder="Descripción" required></textarea>
+        </div>
+
+        <button class="uk-button uk-button-primary" id="submit-btn">Enviar</button>
+      </form>
+    </div>
+
+  </div>
+
+  <script layout:fragment="script">
+  (function(){
+    const form = document.querySelector('#form-reclamo');
+    const btn = document.querySelector('#submit-btn');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      btn.disabled = true;
+
+      // Obtener datos planos del formulario
+      const fd = Object.fromEntries(new FormData(form));
+
+      // Construir el JSON con los objetos anidados que espera la API
+      const payload = {
+        nombre: fd.nombre || null,
+        correo: fd.correo || null,
+        telefono: fd.telefono || null,
+        tipo: { id: parseInt(document.querySelector('#tipo-select').value || '0') },
+        descripcion: fd.descripcion || null,
+        estado: { id: parseInt(document.querySelector('#estado-default').value) } // default 1
+      };
+
+      // validar tipo seleccionado
+      if (!payload.tipo.id) {
+        alert('Selecciona el tipo de reclamo');
+        btn.disabled = false;
+        return;
+      }
+
+      try {
+        const resp = await fetch('/api/reclamos', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const json = await resp.json();
+
+        if (resp.ok) {
+          window.location = '/reclamos/gracias?codigo=' + json.codigo_seguimiento;
+        } else {
+          alert(json.mensaje || 'Error al enviar');
+          btn.disabled = false;
+        }
+      } catch (err) {
+        console.error(err);
+        alert('Error de conexión');
+        btn.disabled = false;
+      }
     });
-
-    const json = await resp.json();
-
-    if(resp.ok){
-        window.location = "/reclamos/gracias?codigo=" + json.codigo_seguimiento;
-    }else{
-        alert("Error al enviar");
-    }
-});
-</script>
-
-</html>
+  })();
+  </script>
+</div>

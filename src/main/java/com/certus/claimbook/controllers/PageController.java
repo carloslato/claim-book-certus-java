@@ -37,6 +37,8 @@ public class PageController {
     @GetMapping("/enviar")
     public String enviarReclamoForm(Model model) {
         model.addAttribute("reclamo", new Reclamo());
+        model.addAttribute("tipos", tipoRepo.findAll());      // lista para el select tipo
+        model.addAttribute("estados", estadoRepo.findAll()); // opcional, si quieres que admin seleccione estado
         return "usuario/enviar-reclamo";
     }
 
