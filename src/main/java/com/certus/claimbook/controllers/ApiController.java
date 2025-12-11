@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.certus.claimbook.entities.Reclamo;
-import com.certus.claimbook.repositories.EstadoRepository;
+// import com.certus.claimbook.repositories.EstadoRepository;
 import com.certus.claimbook.repositories.ReclamoRepository;
-import com.certus.claimbook.repositories.TipoReclamoRepository;
+// import com.certus.claimbook.repositories.TipoReclamoRepository;
 import java.util.List;
 
 import lombok.RequiredArgsConstructor;

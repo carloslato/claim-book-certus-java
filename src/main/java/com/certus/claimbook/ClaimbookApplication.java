@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.component.page.AppShellConfigurator;
 
+@SuppressWarnings("serial")
 @SpringBootApplication
 @Theme("my-theme")
 public class ClaimbookApplication implements AppShellConfigurator {
