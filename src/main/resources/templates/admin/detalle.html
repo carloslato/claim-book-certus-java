@@ -8,11 +8,31 @@
 	
 	<p><b>Nombre:</b> <span th:text="${reclamo.nombre}"></span></p>
 	<p><b>Descripción:</b> <span th:text="${reclamo.descripcion}"></span></p>
-	
+
+	<!-- Estado actual -->
+	<p>
+	    <b>Estado actual:</b>
+	    <span th:text="${reclamo.estado.descripcion}"></span>
+	</p>
+
+	<!-- Cambiar estado -->
+	<div style="margin: 15px 0;">
+	    <label><b>Cambiar estado:</b></label>
+	    <select id="estado-select" class="uk-select" style="max-width: 200px;">
+	        <option value="1" th:selected="${reclamo.estado == 1}">Pendiente</option>
+	        <option value="2" th:selected="${reclamo.estado == 2}">En revisión</option>
+	        <option value="3" th:selected="${reclamo.estado == 3}">Cerrado</option>
+	    </select>
+
+	    <button id="btn-estado" class="uk-button uk-button-secondary uk-margin-small-left">
+	        Actualizar estado
+	    </button>
+	</div>
+
 	<hr>
-	
+
 	<h4>Respuestas</h4>
-	
+
 	<ul class="uk-list uk-list-striped">
 	    <li th:each="r : ${reclamo.respuestas}">
 	        <b th:text="${r.autor}"></b>:
@@ -20,11 +40,11 @@
 	        <div class="uk-text-meta" th:text="${#temporals.format(r.createdAt,'dd/MM/yyyy HH:mm')}"></div>
 	    </li>
 	</ul>
-	
+
 	<hr>
-	
+
 	<h4>Responder</h4>
-	
+
 	<form id="form-respuesta">
 	    <textarea class="uk-textarea" name="mensaje" required></textarea>
 	    <input type="hidden" name="autor" value="EMPLEADO">
@@ -36,6 +56,7 @@
 <script layout:fragment="script">
 const idReclamo = [[${reclamo.id}]];
 
+/* Enviar respuesta */
 document.querySelector("#form-respuesta").addEventListener("submit", async (e)=>{
     e.preventDefault();
     const data = Object.fromEntries(new FormData(e.target));
@@ -44,6 +65,19 @@ document.querySelector("#form-respuesta").addEventListener("submit", async (e)=>
         method:"POST",
         headers:{"Content-Type":"application/json"},
         body: JSON.stringify(data)
+    });
+
+    location.reload();
+});
+
+/* Cambiar estado */
+document.querySelector("#btn-estado").addEventListener("click", async ()=>{
+    const estado = document.querySelector("#estado-select").value;
+
+    await fetch(`/api/reclamos/estado/${idReclamo}`, {
+        method: "PUT",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ estado: Number(estado) })
     });
 
     location.reload();

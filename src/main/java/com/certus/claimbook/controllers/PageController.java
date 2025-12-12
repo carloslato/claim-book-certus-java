@@ -4,16 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 //import com.certus.claimbook.entities.Estado;
 import com.certus.claimbook.entities.Reclamo;
 import com.certus.claimbook.repositories.EstadoRepository;
 import com.certus.claimbook.repositories.ReclamoRepository;
-import com.certus.claimbook.repositories.RespuestaRepository;
 import com.certus.claimbook.repositories.TipoReclamoRepository;
 
 @Controller
@@ -25,9 +22,6 @@ public class PageController {
 
     @Autowired
     private EstadoRepository estadoRepo;
-
-    @Autowired
-    private RespuestaRepository respuestaRepo;
     
     @Autowired
     private TipoReclamoRepository tipoRepo; 
@@ -37,8 +31,8 @@ public class PageController {
     @GetMapping("/enviar")
     public String enviarReclamoForm(Model model) {
         model.addAttribute("reclamo", new Reclamo());
-        model.addAttribute("tipos", tipoRepo.findAll());      // lista para el select tipo
-        model.addAttribute("estados", estadoRepo.findAll()); // opcional, si quieres que admin seleccione estado
+        model.addAttribute("tipos", tipoRepo.findAll());      
+        model.addAttribute("estados", estadoRepo.findAll()); 
         return "usuario/enviar-reclamo";
     }
 
@@ -87,11 +81,9 @@ public class PageController {
 
         long total = reclamoRepo.count();
 
-        
-        
-	        long abiertos = reclamoRepo.countByEstadoDescripcion("Pendiente");
-	        long proceso = reclamoRepo.countByEstadoDescripcion("En revisión");
-	        long cerrados = reclamoRepo.countByEstadoDescripcion("Cerrado");
+        long abiertos = reclamoRepo.countByEstadoDescripcion("Pendiente");
+        long proceso = reclamoRepo.countByEstadoDescripcion("En revisión");
+        long cerrados = reclamoRepo.countByEstadoDescripcion("Cerrado");
 
         model.addAttribute("total", total);
         model.addAttribute("abiertos", abiertos);
